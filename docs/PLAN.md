@@ -37,7 +37,7 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - [x] Repo + `git init`, `.gitignore`, `CLAUDE.md`, ten plik
 - [x] `docker-compose.yml` z PostgreSQL
 - [x] Szkielet Spring Boot (Web, JPA, Security, Validation, PostgreSQL driver) + połączenie z bazą, H2 do testów
-- [ ] Szkielet React (Vite) + Tailwind + React Router
+- [x] Szkielet React (Vite) + Tailwind + React Router
 - [x] Zmienne środowiskowe w `.env` (poza repo), wzór w `.env.example`
 
 ### Etap 1: Autoryzacja
@@ -84,3 +84,6 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - Testy używają H2 w pamięci (`src/test/resources/application.properties`), więc nie potrzebują Dockera.
   Uwaga: H2 to nie Postgres, więc bardziej złożone zapytania (np. statystyki) trzeba sprawdzić też na Postgresie.
 - Schemat bazy na razie przez `ddl-auto=update`; migracje (np. Flyway) rozważyć później.
+- Tailwind CSS v4 przez plugin `@tailwindcss/vite` (bez `tailwind.config.js`; wystarczy `@import "tailwindcss"`).
+- Frontend woła backend przez względne `/api/...`; w trybie dev proxy Vite przekazuje to na `localhost:8080`,
+  więc na razie nie potrzebujemy konfiguracji CORS w Springu.
