@@ -34,11 +34,11 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 ## Etapy
 
 ### Etap 0: Setup
-- [ ] Repo + `git init`, `.gitignore`, `AGENTS.md`, ten plik
-- [ ] `docker-compose.yml` z PostgreSQL
-- [ ] Szkielet Spring Boot (Web, JPA, Security, Validation, PostgreSQL driver)
+- [x] Repo + `git init`, `.gitignore`, `CLAUDE.md`, ten plik
+- [x] `docker-compose.yml` z PostgreSQL
+- [x] Szkielet Spring Boot (Web, JPA, Security, Validation, PostgreSQL driver) + połączenie z bazą, H2 do testów
 - [ ] Szkielet React (Vite) + Tailwind + React Router
-- [ ] Zmienne środowiskowe w `.env` (poza repo)
+- [x] Zmienne środowiskowe w `.env` (poza repo), wzór w `.env.example`
 
 ### Etap 1: Autoryzacja
 - [ ] Encja User, repozytorium
@@ -78,3 +78,9 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 
 ## Notatki / decyzje
 - (tu wpisuj ustalenia, np. dlaczego wybrano JWT w pamięci zamiast localStorage)
+- Spring Boot 4 (nie 3): aktualna wersja, 3.x nie ma już darmowego wsparcia. Java 17 (minimum dla Boot 4).
+- Backend czyta `../.env` przez `spring.config.import=optional:file:../.env[.properties]` (wbudowane w Springa,
+  bez dodatkowej biblioteki). Zmienne środowiskowe systemu mają pierwszeństwo przed `.env`.
+- Testy używają H2 w pamięci (`src/test/resources/application.properties`), więc nie potrzebują Dockera.
+  Uwaga: H2 to nie Postgres, więc bardziej złożone zapytania (np. statystyki) trzeba sprawdzić też na Postgresie.
+- Schemat bazy na razie przez `ddl-auto=update`; migracje (np. Flyway) rozważyć później.
