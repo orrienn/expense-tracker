@@ -6,7 +6,7 @@ import App from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    {/* BrowserRouter udostępnia routing całej aplikacji (adresy bez #) */}
+    {/* BrowserRouter provides routing to the whole app (URLs without #) */}
     <BrowserRouter>
       <App />
     </BrowserRouter>

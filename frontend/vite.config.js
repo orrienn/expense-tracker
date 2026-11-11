@@ -6,8 +6,8 @@ import { defineConfig } from 'vite'
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
-    // Żądania na /api/... serwer deweloperski Vite przekazuje do backendu.
-    // Przeglądarka widzi jeden adres (localhost:5173), więc nie trzeba konfigurować CORS.
+    // The Vite dev server forwards /api/... requests to the backend.
+    // The browser sees a single origin (localhost:5173), so no CORS config is needed.
     proxy: {
       '/api': 'http://localhost:8080',
     },

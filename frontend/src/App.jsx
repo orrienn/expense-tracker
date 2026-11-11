@@ -2,12 +2,12 @@ import { Route, Routes } from 'react-router-dom'
 import HomePage from './pages/HomePage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
 
-// Tu trzymamy listę tras. Kolejne strony (/login, /expenses...) dojdą w następnych etapach.
+// The list of routes. More pages (/login, /expenses...) will be added in later stages.
 function App() {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      {/* "*" łapie każdy adres, który nie pasuje do tras powyżej */}
+      {/* "*" matches any path that doesn't match the routes above */}
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )

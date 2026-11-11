@@ -21,14 +21,14 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    // Nigdy nie trzymamy hasła jawnym tekstem, tylko jego hash
+    // Never store the password in plain text, only its hash
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private Instant createdAt;
 
-    // JPA wymaga konstruktora bez argumentów; protected, żeby nie używać go w zwykłym kodzie
+    // JPA requires a no-args constructor; protected so regular code doesn't use it
     protected User() {
     }
 
@@ -37,7 +37,7 @@ public class User {
         this.passwordHash = passwordHash;
     }
 
-    // Wywoływane automatycznie przez JPA tuż przed pierwszym zapisem encji (INSERT)
+    // Called automatically by JPA right before the entity is first saved (INSERT)
     @PrePersist
     void onCreate() {
         this.createdAt = Instant.now();

@@ -7,10 +7,10 @@ import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    // Zapytanie budowane z nazwy metody: SELECT ... FROM users WHERE email = ?
-    // Używany przy logowaniu i w filtrze JWT.
+    // Query derived from the method name: SELECT ... FROM users WHERE email = ?
+    // Used for login and in the JWT filter.
     Optional<User> findByEmail(String email);
 
-    // Przy rejestracji: sprawdzenie, czy email jest już zajęty
+    // Used on registration to check whether the email is already taken
     boolean existsByEmail(String email);
 }
