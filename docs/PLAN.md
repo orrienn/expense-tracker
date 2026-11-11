@@ -47,7 +47,7 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - [x] Logowanie + generowanie JWT
 - [x] Weryfikacja JWT (wbudowany filtr resource server: `JwtDecoder` + `oauth2ResourceServer` w `SecurityConfig`)
 - [x] Testy serwisu auth
-- [ ] Frontend: strony login/register, kontekst auth, chronione trasy
+- [x] Frontend: strony login/register, kontekst auth, chronione trasy
 
 ### Etap 2: Kategorie i wydatki (CRUD)
 - [ ] Encje Category i Expense, DTO, mappery
@@ -102,4 +102,10 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - Brak/zły/przeterminowany token: 401 (a nie 403). Id zalogowanego użytkownika zawsze z tokena (`jwt.getSubject()`),
   nigdy z URL-a. W Etapie 2 wydzielić do tego wspólny helper dla kontrolerów.
 - `SecurityIntegrationTest` (MockMvc + H2) pilnuje, że chronione endpointy wymagają poprawnego tokena.
+- Limit hasła BCrypta to 72 **bajty**, nie znaki (np. „ą” = 2 bajty). Sprawdzane osobno w `RegisterRequest`
+  (`@AssertTrue`) i w `validation.js`; bez tego 40 × „ą” dawało 500.
+- Frontend: interfejs po angielsku. Token tylko w pamięci (`api/client.js` + `AuthProvider`), więc F5 wylogowuje.
+  Na później: refresh token w ciasteczku `httpOnly`, żeby sesja przetrwała odświeżenie.
+- Po rejestracji automatyczne logowanie. Przekierowania robią `GuestRoute`/`ProtectedRoute` (powrót na stronę z `state.from`).
+- Odpowiedź 401 na żądanie z tokenem (np. wygasły token) → interceptor axios wylogowuje.
 - `/.well-known/oauth-protected-resource`: publiczny opis API (RFC 9728) dodawany domyślnie przez Spring Security 7, bez poufnych danych.
