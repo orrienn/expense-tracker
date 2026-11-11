@@ -15,6 +15,7 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 |---|---|---|
 | POST | /auth/register | rejestracja |
 | POST | /auth/login | logowanie, zwraca JWT |
+| GET | /users/me | dane zalogowanego użytkownika (id z tokena) |
 | GET | /categories | lista kategorii użytkownika |
 | POST | /categories | dodanie kategorii |
 | PUT | /categories/{id} | edycja |
@@ -44,7 +45,7 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - [x] Encja User, repozytorium
 - [x] Rejestracja (hashowanie hasła BCrypt, walidacja)
 - [x] Logowanie + generowanie JWT
-- [ ] Weryfikacja JWT (wbudowany filtr resource server: `JwtDecoder` + `oauth2ResourceServer` w `SecurityConfig`)
+- [x] Weryfikacja JWT (wbudowany filtr resource server: `JwtDecoder` + `oauth2ResourceServer` w `SecurityConfig`)
 - [x] Testy serwisu auth
 - [ ] Frontend: strony login/register, kontekst auth, chronione trasy
 
@@ -98,3 +99,7 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - Token: HS256, klucz `JWT_SECRET` z `.env` (Base64, min. 32 bajty), `sub` = id użytkownika, ważność `jwt.expiration` (domyślnie 1h).
   Bez refresh tokenów: po wygaśnięciu trzeba zalogować się ponownie.
 - Logowanie: nieznany email i złe hasło dają ten sam błąd 401, żeby nie zdradzać, które konta istnieją.
+- Brak/zły/przeterminowany token: 401 (a nie 403). Id zalogowanego użytkownika zawsze z tokena (`jwt.getSubject()`),
+  nigdy z URL-a. W Etapie 2 wydzielić do tego wspólny helper dla kontrolerów.
+- `SecurityIntegrationTest` (MockMvc + H2) pilnuje, że chronione endpointy wymagają poprawnego tokena.
+- `/.well-known/oauth-protected-resource`: publiczny opis API (RFC 9728) dodawany domyślnie przez Spring Security 7, bez poufnych danych.

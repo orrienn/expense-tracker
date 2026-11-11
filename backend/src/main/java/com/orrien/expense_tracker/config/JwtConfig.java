@@ -4,7 +4,9 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 
 import javax.crypto.SecretKey;
@@ -35,11 +37,20 @@ public class JwtConfig {
         return new SecretKeySpec(keyBytes, "HmacSHA256");
     }
 
-    // Signs new tokens. The decoder (verifying tokens) comes in the next task.
+    // Signs new tokens (used at login)
     @Bean
     public JwtEncoder jwtEncoder(SecretKey jwtSecretKey) {
         return NimbusJwtEncoder.withSecretKey(jwtSecretKey)
                 .algorithm(ALGORITHM)
+                .build();
+    }
+
+    // Verifies incoming tokens: checks the signature with the same key and rejects expired tokens.
+    // Spring Security's built-in Bearer token filter uses this bean automatically.
+    @Bean
+    public JwtDecoder jwtDecoder(SecretKey jwtSecretKey) {
+        return NimbusJwtDecoder.withSecretKey(jwtSecretKey)
+                .macAlgorithm(ALGORITHM)
                 .build();
     }
 }
