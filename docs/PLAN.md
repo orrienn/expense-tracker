@@ -41,7 +41,7 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - [x] Zmienne środowiskowe w `.env` (poza repo), wzór w `.env.example`
 
 ### Etap 1: Autoryzacja
-- [ ] Encja User, repozytorium
+- [x] Encja User, repozytorium
 - [ ] Rejestracja (hashowanie hasła BCrypt, walidacja)
 - [ ] Logowanie + generowanie JWT
 - [ ] Filtr JWT i konfiguracja Spring Security
@@ -87,3 +87,5 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - Tailwind CSS v4 przez plugin `@tailwindcss/vite` (bez `tailwind.config.js`; wystarczy `@import "tailwindcss"`).
 - Frontend woła backend przez względne `/api/...`; w trybie dev proxy Vite przekazuje to na `localhost:8080`,
   więc na razie nie potrzebujemy konfiguracji CORS w Springu.
+- Tabela użytkowników to `users`, bo `user` to słowo zarezerwowane w PostgreSQL.
+- Bez Lomboka: gettery/settery w encjach piszemy ręcznie (zasada „bez nowych bibliotek bez pytania”).
