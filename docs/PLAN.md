@@ -42,7 +42,7 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 
 ### Etap 1: Autoryzacja
 - [x] Encja User, repozytorium
-- [ ] Rejestracja (hashowanie hasła BCrypt, walidacja)
+- [x] Rejestracja (hashowanie hasła BCrypt, walidacja)
 - [ ] Logowanie + generowanie JWT
 - [ ] Filtr JWT i konfiguracja Spring Security
 - [ ] Testy serwisu auth
@@ -89,3 +89,8 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
   więc na razie nie potrzebujemy konfiguracji CORS w Springu.
 - Tabela użytkowników to `users`, bo `user` to słowo zarezerwowane w PostgreSQL.
 - Bez Lomboka: gettery/settery w encjach piszemy ręcznie (zasada „bez nowych bibliotek bez pytania”).
+- Email normalizowany: `trim()` w `RegisterRequest` (przed walidacją `@Email`), małe litery w `AuthService`.
+- Hasło: 8–72 znaki (72 bajty to limit BCrypta). Rejestracja nie zwraca tokena, token daje dopiero `/login`.
+- `SecurityConfig` na razie minimalny: CSRF wyłączony, sesje STATELESS, otwarte `/api/auth/**` i `/error`.
+- `EmailAlreadyTakenException` tymczasowo z `@ResponseStatus(CONFLICT)`, do zastąpienia przez `@RestControllerAdvice` (Etap 2).
+- Testy serwisu auth: rejestracja już ma testy w `AuthServiceTest`; punkt odhaczamy po testach logowania.
