@@ -1,5 +1,7 @@
 package com.orrien.expense_tracker.controller;
 
+import com.orrien.expense_tracker.dto.AuthResponse;
+import com.orrien.expense_tracker.dto.LoginRequest;
 import com.orrien.expense_tracker.dto.RegisterRequest;
 import com.orrien.expense_tracker.dto.UserResponse;
 import com.orrien.expense_tracker.service.AuthService;
@@ -26,5 +28,11 @@ public class AuthController {
     @ResponseStatus(HttpStatus.CREATED)
     public UserResponse register(@Valid @RequestBody RegisterRequest request) {
         return authService.register(request);
+    }
+
+    // 200 OK (default) with the token; wrong credentials -> 401 Unauthorized
+    @PostMapping("/login")
+    public AuthResponse login(@Valid @RequestBody LoginRequest request) {
+        return authService.login(request);
     }
 }

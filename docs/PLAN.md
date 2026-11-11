@@ -43,9 +43,9 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 ### Etap 1: Autoryzacja
 - [x] Encja User, repozytorium
 - [x] Rejestracja (hashowanie hasła BCrypt, walidacja)
-- [ ] Logowanie + generowanie JWT
-- [ ] Filtr JWT i konfiguracja Spring Security
-- [ ] Testy serwisu auth
+- [x] Logowanie + generowanie JWT
+- [ ] Weryfikacja JWT (wbudowany filtr resource server: `JwtDecoder` + `oauth2ResourceServer` w `SecurityConfig`)
+- [x] Testy serwisu auth
 - [ ] Frontend: strony login/register, kontekst auth, chronione trasy
 
 ### Etap 2: Kategorie i wydatki (CRUD)
@@ -93,4 +93,8 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - Hasło: 8–72 znaki (72 bajty to limit BCrypta). Rejestracja nie zwraca tokena, token daje dopiero `/login`.
 - `SecurityConfig` na razie minimalny: CSRF wyłączony, sesje STATELESS, otwarte `/api/auth/**` i `/error`.
 - `EmailAlreadyTakenException` tymczasowo z `@ResponseStatus(CONFLICT)`, do zastąpienia przez `@RestControllerAdvice` (Etap 2).
-- Testy serwisu auth: rejestracja już ma testy w `AuthServiceTest`; punkt odhaczamy po testach logowania.
+- JWT przez `spring-boot-starter-security-oauth2-resource-server` (oficjalny moduł Springa), a nie jjwt:
+  bez własnego filtra, a `jjwt-jackson` używa Jacksona 2, podczas gdy Boot 4 ma Jacksona 3.
+- Token: HS256, klucz `JWT_SECRET` z `.env` (Base64, min. 32 bajty), `sub` = id użytkownika, ważność `jwt.expiration` (domyślnie 1h).
+  Bez refresh tokenów: po wygaśnięciu trzeba zalogować się ponownie.
+- Logowanie: nieznany email i złe hasło dają ten sam błąd 401, żeby nie zdradzać, które konta istnieją.
