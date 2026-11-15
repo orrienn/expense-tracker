@@ -1,0 +1,7 @@
+.alert {
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-md);
+  background-color: var(--color-danger-bg);
+  font-size: var(--font-size-sm);
+  color: var(--color-danger-text);
+}

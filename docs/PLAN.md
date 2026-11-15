@@ -38,7 +38,7 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - [x] Repo + `git init`, `.gitignore`, `CLAUDE.md`, ten plik
 - [x] `docker-compose.yml` z PostgreSQL
 - [x] Szkielet Spring Boot (Web, JPA, Security, Validation, PostgreSQL driver) + połączenie z bazą, H2 do testów
-- [x] Szkielet React (Vite) + Tailwind + React Router
+- [x] Szkielet React (Vite) + Tailwind + React Router (Tailwind później zastąpiony CSS Modules)
 - [x] Zmienne środowiskowe w `.env` (poza repo), wzór w `.env.example`
 
 ### Etap 1: Autoryzacja
@@ -55,6 +55,7 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - [x] CRUD wydatków (tylko własne, walidacja kwoty i daty)
 - [x] Globalna obsługa błędów (`@RestControllerAdvice`)
 - [x] Testy serwisów
+- [x] Frontend: przejście z Tailwinda na CSS Modules
 - [ ] Frontend: strona kategorii
 - [ ] Frontend: strona wydatków (lista + formularz dodawania/edycji)
 
@@ -85,7 +86,10 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - Testy używają H2 w pamięci (`src/test/resources/application.properties`), więc nie potrzebują Dockera.
   Uwaga: H2 to nie Postgres, więc bardziej złożone zapytania (np. statystyki) trzeba sprawdzić też na Postgresie.
 - Schemat bazy na razie przez `ddl-auto=update`; migracje (np. Flyway) rozważyć później.
-- Tailwind CSS v4 przez plugin `@tailwindcss/vite` (bez `tailwind.config.js`; wystarczy `@import "tailwindcss"`).
+- Style: CSS Modules zamiast Tailwinda (decyzja z Etapu 2, przed stronami CRUD): style w osobnych plikach,
+  więcej swobody i porządku niż długie listy klas w JSX. Vite zmienia nazwy klas na unikalne, więc `.title`
+  w dwóch modułach się nie gryzie. Zmienne CSS (kolory itd.) i reset przeglądarki w `index.css`.
+  Wspólne elementy: `Button` (`variant`: primary/secondary), `ErrorAlert`. Marginesy ustawia rodzic przez `className`.
 - Frontend woła backend przez względne `/api/...`; w trybie dev proxy Vite przekazuje to na `localhost:8080`,
   więc na razie nie potrzebujemy konfiguracji CORS w Springu.
 - Tabela użytkowników to `users`, bo `user` to słowo zarezerwowane w PostgreSQL.

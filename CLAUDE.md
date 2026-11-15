@@ -11,7 +11,7 @@ Projekt portfolio, pisany krok po kroku. Aktualny plan i stan prac: `docs/PLAN.m
 ## Stack
 - Backend: Java 17, Spring Boot 4, Spring Web MVC, Spring Data JPA, Spring Security (JWT), Bean Validation
 - Baza: PostgreSQL (lokalnie przez Docker Compose); H2 tylko do testów
-- Frontend: React + Vite, React Router, axios, Recharts, Tailwind CSS
+- Frontend: React + Vite, React Router, axios, Recharts, CSS Modules (wbudowane w Vite)
 - Testy: JUnit 5, Mockito (backend); opcjonalnie Vitest (frontend)
 - Narzędzia: Maven, Docker Compose, Git
 
@@ -44,6 +44,9 @@ docker-compose.yml
 - Token JWT trzymamy w pamięci aplikacji/kontekście (nie logujemy go do konsoli).
 - Obsługuj stany: ładowanie, błąd, pusta lista.
 - Formularze z walidacją po stronie klienta (uzupełnia, nie zastępuje walidacji backendu).
+- Style w osobnych plikach CSS Modules: `Komponent.module.css` obok komponentu, `className={styles.nazwa}`.
+  Bez Tailwinda i bez stylów inline. Kolory, odstępy, cienie jako zmienne CSS w `src/index.css` (tam też reset).
+  Powtarzalne elementy UI (przycisk, komunikat błędu) jako komponenty w `src/components`.
 
 ## Zasady pracy
 - Najpierw plan, potem kod: przy większych zadaniach najpierw zaproponuj plan i poczekaj na akceptację.

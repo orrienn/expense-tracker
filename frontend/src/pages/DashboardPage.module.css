@@ -1,0 +1,39 @@
+/* Temporary styles for the placeholder dashboard (the real one comes in Stage 3) */
+
+.page {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: 0 1rem;
+}
+
+.card {
+  width: 100%;
+  max-width: 24rem;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.info {
+  margin-top: 0.5rem;
+  color: var(--color-text-muted);
+}
+
+.email {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.logout {
+  margin-top: 1.5rem;
+}

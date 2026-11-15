@@ -1,1 +1,81 @@
-@import "tailwindcss";
+/* Global styles: design tokens, a small reset and base element styles.
+   Component styles live next to each component in *.module.css files (CSS Modules). */
+
+/* Design tokens: shared colors, sizes and shadows as CSS variables.
+   Use them in modules as var(--color-primary), so a color is changed in one place only. */
+:root {
+  --color-bg: #f1f5f9;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f8fafc;
+  --color-border: #cbd5e1;
+  --color-text: #1e293b;
+  --color-text-strong: #0f172a;
+  --color-text-muted: #475569;
+  --color-text-subtle: #64748b;
+  --color-label: #334155;
+
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-focus: #3b82f6;
+  --color-focus-ring: #bfdbfe;
+
+  --color-danger: #dc2626;
+  --color-danger-border: #ef4444;
+  --color-danger-ring: #fecaca;
+  --color-danger-bg: #fef2f2;
+  --color-danger-text: #b91c1c;
+
+  --radius-md: 0.375rem;
+  --radius-lg: 0.75rem;
+
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+
+  --font-size-sm: 0.875rem;
+  --font-size-xl: 1.5rem;
+
+  font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  line-height: 1.5;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+}
+
+/* Reset: browsers add their own margins, sizes and fonts; we start from zero
+   (this is what Tailwind's "preflight" did for us before) */
+*,
+*::before,
+*::after {
+  box-sizing: border-box; /* width includes padding and border */
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* Form controls don't inherit the page font by default */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* Base link style, used by <Link> as well */
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

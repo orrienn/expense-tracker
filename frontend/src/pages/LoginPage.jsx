@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { getErrorMessage } from '../api/errors.js'
+import Button from '../components/Button.jsx'
+import ErrorAlert from '../components/ErrorAlert.jsx'
 import FormField from '../components/FormField.jsx'
 import { useAuth } from '../hooks/useAuth.js'
 import { hasErrors, validateEmail } from '../utils/validation.js'
+import styles from './AuthPage.module.css'
 
 function LoginPage() {
   const { login } = useAuth()
@@ -38,19 +41,17 @@ function LoginPage() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-slate-100 px-4">
-      <div className="w-full max-w-sm rounded-xl bg-white p-8 shadow-md">
-        <h1 className="text-2xl font-bold text-slate-800">Log in</h1>
-        <p className="mt-1 text-sm text-slate-500">Welcome back to Expense Tracker.</p>
+    <main className={styles.page}>
+      <div className={styles.card}>
+        <h1 className={styles.title}>Log in</h1>
+        <p className={styles.subtitle}>Welcome back to Expense Tracker.</p>
 
         {serverError && (
-          <p role="alert" className="mt-4 rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
-            {serverError}
-          </p>
+          <ErrorAlert className={styles.alert}>{serverError}</ErrorAlert>
         )}
 
         {/* noValidate: use our own validation messages instead of the browser's built-in ones */}
-        <form onSubmit={handleSubmit} noValidate className="mt-6 space-y-4">
+        <form onSubmit={handleSubmit} noValidate className={styles.form}>
           <FormField
             id="email"
             label="Email"
@@ -75,19 +76,15 @@ function LoginPage() {
             }}
             error={errors.password}
           />
-          <button
-            type="submit"
-            disabled={submitting}
-            className="w-full rounded-md bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
-          >
+          <Button type="submit" disabled={submitting} fullWidth>
             {submitting ? 'Logging in…' : 'Log in'}
-          </button>
+          </Button>
         </form>
 
-        <p className="mt-6 text-center text-sm text-slate-600">
+        <p className={styles.footer}>
           Don&apos;t have an account?{' '}
           {/* Pass state on, so after registering the user still lands on the page they wanted */}
-          <Link to="/register" state={location.state} className="font-medium text-blue-600 hover:underline">
+          <Link to="/register" state={location.state} className={styles.footerLink}>
             Sign up
           </Link>
         </p>
