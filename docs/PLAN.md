@@ -51,7 +51,7 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 
 ### Etap 2: Kategorie i wydatki (CRUD)
 - [x] Encje Category i Expense, DTO, mappery
-- [ ] CRUD kategorii (tylko własne)
+- [x] CRUD kategorii (tylko własne)
 - [ ] CRUD wydatków (tylko własne, walidacja kwoty i daty)
 - [ ] Globalna obsługa błędów (`@RestControllerAdvice`)
 - [ ] Testy serwisów
@@ -113,7 +113,13 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - Mappery bez MapStruct: statyczne `XxxResponse.from(encja)`. `ExpenseResponse.from()` czyta leniwą kategorię,
   więc wywołujemy go tylko w metodach `@Transactional` serwisu (`open-in-view=false`).
 - Kategoria wydatku opcjonalna (`null` = „Uncategorized”). Usunięcie kategorii ustawia `category = null`
-  w jej wydatkach (do zrobienia w CRUD kategorii), nic nie jest kasowane kaskadowo.
+  w jej wydatkach (`ExpenseRepository.clearCategory`, jeden `UPDATE`), nic nie jest kasowane kaskadowo.
 - Nazwa kategorii unikalna w obrębie użytkownika (`UNIQUE(user_id, name)`), maks. 50 znaków, `trim()` w `CategoryRequest`.
 - Wydatek: kwota `numeric(12,2)` + `@Positive @Digits(10, 2)`, data `@PastOrPresent` (bez przyszłych),
   opis opcjonalny (maks. 255, pusty → `null`). Kolumna daty to `expense_date`, bo `DATE` to słowo kluczowe SQL.
+- Id zalogowanego użytkownika w kontrolerach: `@CurrentUserId Long userId` (meta-adnotacja na `@AuthenticationPrincipal`
+  z wyrażeniem SpEL zamieniającym `sub` z tokena na `Long`).
+- Cudzy zasób → 404 (jak nieistniejący), nie 403, żeby nie zdradzać, że istnieje. Repozytoria zawsze filtrują po `userId`.
+- Duplikat nazwy kategorii sprawdzany bez względu na wielkość liter (w serwisie) → 409. Ograniczenie `UNIQUE` w bazie
+  rozróżnia wielkość liter, więc przy równoczesnych żądaniach teoretycznie mogą powstać „Food” i „food”.
+- Integracyjne testy na H2 dzielą jedną bazę (wspólny kontekst Springa), więc używają unikalnych emaili (UUID).
