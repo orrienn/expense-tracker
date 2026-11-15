@@ -21,6 +21,8 @@
   padding: 0.5rem 0.75rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
+  /* Explicit, because browsers give <select> a grey background by default */
+  background-color: var(--color-surface);
   color: var(--color-text-strong);
   box-shadow: var(--shadow-sm);
 }
@@ -44,4 +46,10 @@
   margin-top: 0.25rem;
   font-size: var(--font-size-sm);
   color: var(--color-danger);
+}
+
+.hint {
+  margin-top: 0.25rem;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-subtle);
 }

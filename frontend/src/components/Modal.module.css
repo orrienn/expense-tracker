@@ -1,0 +1,27 @@
+.dialog {
+  width: min(30rem, calc(100% - 2rem));
+  max-height: calc(100% - 2rem);
+  /* The reset in index.css sets margin: 0 on everything; a dialog needs "auto" to be centered */
+  margin: auto;
+  padding: 1.5rem;
+  overflow-y: auto;
+  border: none;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-md);
+  color: var(--color-text);
+}
+
+/* The dimmed layer behind the dialog, drawn by the browser when using showModal() */
+.dialog::backdrop {
+  background-color: rgb(15 23 42 / 0.5);
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.body {
+  margin-top: 1rem;
+}

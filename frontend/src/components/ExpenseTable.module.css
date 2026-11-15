@@ -1,0 +1,69 @@
+/* On narrow screens the table scrolls sideways inside this box instead of widening the whole page.
+   position: relative keeps absolutely positioned children (the visually-hidden "Actions" label) inside
+   this box; without it they are placed relative to the page and stretch it sideways. */
+.scroll {
+  position: relative;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  min-width: 36rem;
+  border-collapse: collapse; /* one shared border between cells instead of a double one */
+  font-size: var(--font-size-sm);
+}
+
+.table th {
+  padding: 0 0.75rem 0.5rem;
+  text-align: left;
+  font-weight: 500;
+  color: var(--color-text-subtle);
+}
+
+.table td {
+  padding: 0.75rem;
+  border-top: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+/* No extra space on the outer edges, so the table lines up with the card content */
+.table th:first-child,
+.table td:first-child {
+  padding-left: 0;
+}
+
+.table th:last-child,
+.table td:last-child {
+  padding-right: 0;
+}
+
+.date {
+  white-space: nowrap;
+  color: var(--color-text-muted);
+}
+
+.description {
+  overflow-wrap: anywhere;
+  color: var(--color-text);
+}
+
+.muted {
+  color: var(--color-text-subtle);
+  font-style: italic;
+}
+
+/* ".table .amount" (two classes) wins over ".table th" (class + element) without needing !important.
+   tabular-nums: all digits have the same width, so amounts line up in the column. */
+.table .amount {
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}

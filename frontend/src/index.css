@@ -79,3 +79,14 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
+/* Hidden on screen but still read by screen readers (e.g. a name for an icon-only column).
+   Global on purpose: a generic helper used as className="visually-hidden" anywhere. */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

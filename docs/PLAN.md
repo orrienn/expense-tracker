@@ -57,7 +57,7 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - [x] Testy serwisów
 - [x] Frontend: przejście z Tailwinda na CSS Modules
 - [x] Frontend: strona kategorii
-- [ ] Frontend: strona wydatków (lista + formularz dodawania/edycji)
+- [x] Frontend: strona wydatków (lista + formularz dodawania/edycji)
 
 ### Etap 3: Filtrowanie i statystyki
 - [ ] Filtrowanie, sortowanie i paginacja wydatków (backend)
@@ -147,3 +147,12 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - Wspólne style pól: `FormField.module.css`; inny komponent importuje ten moduł i łączy klasy w JSX
   (`${fieldStyles.input} ${styles.input}`). Nie używamy `composes ... from` między plikami: Vite wypisuje wtedy
   ostrzeżenie PostCSS przy każdym buildzie. `FormField` przyjmuje `children` wyświetlane obok pola (np. przycisk „Add”).
+- Wydatki: tabela + modal na natywnym `<dialog>` (`showModal()`: tło, Escape, fokus w oknie). O otwarciu/zamknięciu
+  decyduje tylko stan Reacta: `cancel` (Escape) ma `preventDefault()`, a spóźnione zdarzenie `close` jest ignorowane,
+  jeśli dialog został w międzyczasie otwarty ponownie (inaczej szybkie kliknięcie po zamknięciu gubiło modal).
+- Kwota w formularzu jako tekst z `inputMode="decimal"` (przyjmuje „12,50” i „12.50”), wysyłana jako liczba.
+  Waluta: stała `CURRENCY = 'PLN'` w `utils/format.js`, formatowanie `Intl` wg języka przeglądarki („12,50 zł”).
+- Daty jako `"YYYY-MM-DD"`; „dziś” liczone z lokalnej daty (nie `toISOString()`, które jest w UTC).
+- Błędy 400 z backendu (`errors` w `ProblemDetail`) trafiają pod pola formularza (`getFieldErrors`).
+- Na telefonie tabela wydatków przewija się w bok we własnym kontenerze (kolumna kwoty jest wtedy poza ekranem;
+  do rozważenia widok kart na wąskich ekranach).

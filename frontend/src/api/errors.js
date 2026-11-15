@@ -6,3 +6,10 @@ export function getErrorMessage(error, messagesByStatus = {}) {
   }
   return messagesByStatus[error.response.status] ?? 'Something went wrong. Please try again.'
 }
+
+// Validation errors from the backend (400 ProblemDetail with an "errors" map, see GlobalExceptionHandler),
+// e.g. { amount: 'must be greater than 0' }. Empty object for any other error.
+export function getFieldErrors(error) {
+  if (error.response?.status !== 400) return {}
+  return error.response.data?.errors ?? {}
+}
