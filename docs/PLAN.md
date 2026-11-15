@@ -52,7 +52,7 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 ### Etap 2: Kategorie i wydatki (CRUD)
 - [x] Encje Category i Expense, DTO, mappery
 - [x] CRUD kategorii (tylko własne)
-- [ ] CRUD wydatków (tylko własne, walidacja kwoty i daty)
+- [x] CRUD wydatków (tylko własne, walidacja kwoty i daty)
 - [ ] Globalna obsługa błędów (`@RestControllerAdvice`)
 - [ ] Testy serwisów
 - [ ] Frontend: strona kategorii
@@ -123,3 +123,8 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - Duplikat nazwy kategorii sprawdzany bez względu na wielkość liter (w serwisie) → 409. Ograniczenie `UNIQUE` w bazie
   rozróżnia wielkość liter, więc przy równoczesnych żądaniach teoretycznie mogą powstać „Food” i „food”.
 - Integracyjne testy na H2 dzielą jedną bazę (wspólny kontekst Springa), więc używają unikalnych emaili (UUID).
+- `categoryId` z treści żądania wydatku sprawdzany przez `findByIdAndUserId`: cudza/nieistniejąca kategoria → 404
+  (ten sam `CategoryNotFoundException`). Bez tego dałoby się podpiąć wydatek pod cudzą kategorię.
+- `PUT /expenses/{id}` podmienia wszystkie pola; `categoryId = null` odpina kategorię.
+- Lista wydatków: `@EntityGraph(attributePaths = "category")`, żeby kategorie przyszły w jednym zapytaniu (JOIN),
+  a nie osobnym SELECT-em na każdy wydatek (problem N+1). Na razie pełna lista od najnowszych; paginacja w Etapie 3.
