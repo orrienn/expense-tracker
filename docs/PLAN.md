@@ -50,7 +50,7 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - [x] Frontend: strony login/register, kontekst auth, chronione trasy
 
 ### Etap 2: Kategorie i wydatki (CRUD)
-- [ ] Encje Category i Expense, DTO, mappery
+- [x] Encje Category i Expense, DTO, mappery
 - [ ] CRUD kategorii (tylko własne)
 - [ ] CRUD wydatków (tylko własne, walidacja kwoty i daty)
 - [ ] Globalna obsługa błędów (`@RestControllerAdvice`)
@@ -109,3 +109,11 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - Po rejestracji automatyczne logowanie. Przekierowania robią `GuestRoute`/`ProtectedRoute` (powrót na stronę z `state.from`).
 - Odpowiedź 401 na żądanie z tokenem (np. wygasły token) → interceptor axios wylogowuje.
 - `/.well-known/oauth-protected-resource`: publiczny opis API (RFC 9728) dodawany domyślnie przez Spring Security 7, bez poufnych danych.
+- Relacje tylko `@ManyToOne(fetch = LAZY)` (jednokierunkowe): `User` nie ma list kategorii/wydatków, pobieramy je przez repozytoria.
+- Mappery bez MapStruct: statyczne `XxxResponse.from(encja)`. `ExpenseResponse.from()` czyta leniwą kategorię,
+  więc wywołujemy go tylko w metodach `@Transactional` serwisu (`open-in-view=false`).
+- Kategoria wydatku opcjonalna (`null` = „Uncategorized”). Usunięcie kategorii ustawia `category = null`
+  w jej wydatkach (do zrobienia w CRUD kategorii), nic nie jest kasowane kaskadowo.
+- Nazwa kategorii unikalna w obrębie użytkownika (`UNIQUE(user_id, name)`), maks. 50 znaków, `trim()` w `CategoryRequest`.
+- Wydatek: kwota `numeric(12,2)` + `@Positive @Digits(10, 2)`, data `@PastOrPresent` (bez przyszłych),
+  opis opcjonalny (maks. 255, pusty → `null`). Kolumna daty to `expense_date`, bo `DATE` to słowo kluczowe SQL.
