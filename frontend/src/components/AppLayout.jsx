@@ -34,7 +34,9 @@ function AppLayout() {
           </nav>
 
           <div className={styles.user}>
-            <span className={styles.email}>{user.email}</span>
+            <span className={styles.email} title={user.email}>
+              {user.email}
+            </span>
             <Button variant="secondary" onClick={logout}>
               Log out
             </Button>

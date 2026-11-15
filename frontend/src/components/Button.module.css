@@ -3,6 +3,7 @@
   border: 1px solid transparent;
   border-radius: var(--radius-md);
   font-weight: 500;
+  white-space: nowrap; /* "Log out" stays on one line on narrow screens */
 }
 
 .button:disabled {

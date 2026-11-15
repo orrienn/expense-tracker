@@ -4,6 +4,8 @@ import { getErrorMessage } from '../api/errors.js'
 import { validateCategoryName } from '../utils/validation.js'
 import Button from './Button.jsx'
 import styles from './CategoryRow.module.css'
+// Reuse the input/error look of FormField, so all inputs in the app look the same
+import fieldStyles from './FormField.module.css'
 
 // One category on the list. "Edit" turns the row into an inline form (Enter saves, Escape cancels).
 // onRename(id, name) and onDelete(id) come from the page and throw on failure.
@@ -87,7 +89,7 @@ function CategoryRow({ category, onRename, onDelete }) {
             aria-describedby={error ? errorId : undefined}
             autoComplete="off"
             autoFocus
-            className={styles.input}
+            className={`${fieldStyles.input} ${styles.input}`}
           />
           <Button type="submit" disabled={busy}>
             {busy ? 'Saving…' : 'Save'}
@@ -111,7 +113,7 @@ function CategoryRow({ category, onRename, onDelete }) {
       )}
 
       {error && (
-        <p id={errorId} className={styles.error}>
+        <p id={errorId} className={`${fieldStyles.error} ${styles.error}`}>
           {error}
         </p>
       )}

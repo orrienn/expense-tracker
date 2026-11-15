@@ -43,15 +43,23 @@
   color: var(--color-primary);
 }
 
-/* margin-left: auto pushes the user part to the right edge */
+/* Takes the rest of the line (min. 12rem, otherwise it moves to its own line)
+   and keeps its content on the right edge */
 .user {
   display: flex;
+  flex: 1 1 12rem;
   align-items: center;
+  justify-content: flex-end;
   gap: 0.75rem;
-  margin-left: auto;
+  min-width: 0;
 }
 
+/* A long email is cut with "…" instead of pushing the button out (full email in the tooltip) */
 .email {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   font-size: var(--font-size-sm);
   color: var(--color-text-muted);
 }

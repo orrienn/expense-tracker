@@ -12,7 +12,7 @@
   margin-top: 0.25rem;
 }
 
-/* Also reused by other modules via "composes: input from ..." */
+/* Also used directly by other components (e.g. CategoryRow imports this module) */
 .input {
   display: block;
   flex: 1; /* takes all the space left next to the children */

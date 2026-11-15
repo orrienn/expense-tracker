@@ -27,15 +27,13 @@
   gap: 0.5rem;
 }
 
-/* "composes" (a CSS Modules feature) reuses the input/error styles from FormField
-   instead of copying them, so all inputs look the same */
+/* The look of the input and error comes from FormField.module.css (both classes are set in CategoryRow.jsx);
+   here only what's specific to the row */
 .input {
-  composes: input from './FormField.module.css';
-  min-width: 10rem;
+  min-width: 6rem;
 }
 
 .error {
-  composes: error from './FormField.module.css';
   flex-basis: 100%;
   margin-top: 0;
 }

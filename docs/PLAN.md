@@ -144,5 +144,6 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
   z odpowiedzi serwera (bez ponownego pobierania całości).
 - Kategorie: edycja w wierszu (Enter zapisuje, Escape anuluje), usuwanie z `window.confirm`. 404 przy edycji/usuwaniu
   (kategoria usunięta gdzie indziej) → komunikat na stronie i odświeżenie listy.
-- Wspólne style pól: `FormField.module.css`, w innych modułach przez `composes: input from './FormField.module.css'`.
-  `FormField` przyjmuje `children` wyświetlane obok pola (np. przycisk „Add”).
+- Wspólne style pól: `FormField.module.css`; inny komponent importuje ten moduł i łączy klasy w JSX
+  (`${fieldStyles.input} ${styles.input}`). Nie używamy `composes ... from` między plikami: Vite wypisuje wtedy
+  ostrzeżenie PostCSS przy każdym buildzie. `FormField` przyjmuje `children` wyświetlane obok pola (np. przycisk „Add”).
