@@ -53,7 +53,7 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - [x] Encje Category i Expense, DTO, mappery
 - [x] CRUD kategorii (tylko własne)
 - [x] CRUD wydatków (tylko własne, walidacja kwoty i daty)
-- [ ] Globalna obsługa błędów (`@RestControllerAdvice`)
+- [x] Globalna obsługa błędów (`@RestControllerAdvice`)
 - [ ] Testy serwisów
 - [ ] Frontend: strona kategorii
 - [ ] Frontend: strona wydatków (lista + formularz dodawania/edycji)
@@ -93,7 +93,6 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - Email normalizowany: `trim()` w `RegisterRequest` (przed walidacją `@Email`), małe litery w `AuthService`.
 - Hasło: 8–72 znaki (72 bajty to limit BCrypta). Rejestracja nie zwraca tokena, token daje dopiero `/login`.
 - `SecurityConfig` na razie minimalny: CSRF wyłączony, sesje STATELESS, otwarte `/api/auth/**` i `/error`.
-- `EmailAlreadyTakenException` tymczasowo z `@ResponseStatus(CONFLICT)`, do zastąpienia przez `@RestControllerAdvice` (Etap 2).
 - JWT przez `spring-boot-starter-security-oauth2-resource-server` (oficjalny moduł Springa), a nie jjwt:
   bez własnego filtra, a `jjwt-jackson` używa Jacksona 2, podczas gdy Boot 4 ma Jacksona 3.
 - Token: HS256, klucz `JWT_SECRET` z `.env` (Base64, min. 32 bajty), `sub` = id użytkownika, ważność `jwt.expiration` (domyślnie 1h).
@@ -128,3 +127,9 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - `PUT /expenses/{id}` podmienia wszystkie pola; `categoryId = null` odpina kategorię.
 - Lista wydatków: `@EntityGraph(attributePaths = "category")`, żeby kategorie przyszły w jednym zapytaniu (JOIN),
   a nie osobnym SELECT-em na każdy wydatek (problem N+1). Na razie pełna lista od najnowszych; paginacja w Etapie 3.
+- Błędy API w formacie `ProblemDetail` (RFC 9457, `application/problem+json`): `type`, `title`, `status`, `detail`, `instance`;
+  przy walidacji dodatkowo `errors: {pole: komunikat}`. `GlobalExceptionHandler` dziedziczy po `ResponseEntityExceptionHandler`
+  (obsługuje błędy samego Springa: zły JSON, zły typ w URL-u, 405...). Własne wyjątki dziedziczą po `NotFoundException` (404)
+  albo `ConflictException` (409). Nieoczekiwany wyjątek → 500 z ogólnym komunikatem, szczegóły tylko w logach.
+- 401 przy braku/złym tokenie zwraca filtr Spring Security (pusta treść + nagłówek `WWW-Authenticate`, standard OAuth2),
+  a nie `@RestControllerAdvice`. Na razie zostawiamy; ewentualnie później własny `AuthenticationEntryPoint` z `ProblemDetail`.
