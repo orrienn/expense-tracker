@@ -54,7 +54,7 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - [x] CRUD kategorii (tylko własne)
 - [x] CRUD wydatków (tylko własne, walidacja kwoty i daty)
 - [x] Globalna obsługa błędów (`@RestControllerAdvice`)
-- [ ] Testy serwisów
+- [x] Testy serwisów
 - [ ] Frontend: strona kategorii
 - [ ] Frontend: strona wydatków (lista + formularz dodawania/edycji)
 
