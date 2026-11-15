@@ -25,6 +25,18 @@ export function validateNewPassword(password) {
   return null
 }
 
+// Same limit as Category.NAME_MAX_LENGTH on the backend
+export const CATEGORY_NAME_MAX_LENGTH = 50
+
+export function validateCategoryName(name) {
+  const trimmed = name.trim()
+  if (!trimmed) return 'Name is required.'
+  if (trimmed.length > CATEGORY_NAME_MAX_LENGTH) {
+    return `Name must be at most ${CATEGORY_NAME_MAX_LENGTH} characters.`
+  }
+  return null
+}
+
 export function hasErrors(errors) {
   return Object.values(errors).some(Boolean)
 }

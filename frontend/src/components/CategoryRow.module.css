@@ -1,0 +1,41 @@
+/* flex-wrap + .error with flex-basis 100% puts the error message on its own line below */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.name {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere; /* a long name without spaces wraps instead of breaking the layout */
+  color: var(--color-text);
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.editForm {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* "composes" (a CSS Modules feature) reuses the input/error styles from FormField
+   instead of copying them, so all inputs look the same */
+.input {
+  composes: input from './FormField.module.css';
+  min-width: 10rem;
+}
+
+.error {
+  composes: error from './FormField.module.css';
+  flex-basis: 100%;
+  margin-top: 0;
+}

@@ -1,0 +1,63 @@
+.header {
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+}
+
+/* Same max width as .main, so the header lines up with the page content */
+.headerInner {
+  display: flex;
+  flex-wrap: wrap; /* on narrow screens the parts move to the next line instead of overflowing */
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+}
+
+.brand {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.nav {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.link {
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.link:hover {
+  background-color: var(--color-surface-hover);
+  text-decoration: none;
+}
+
+/* NavLink adds this class for the current page */
+.active {
+  background-color: var(--color-bg);
+  color: var(--color-primary);
+}
+
+/* margin-left: auto pushes the user part to the right edge */
+.user {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-left: auto;
+}
+
+.email {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.main {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}

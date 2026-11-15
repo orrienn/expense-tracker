@@ -30,6 +30,18 @@
   background-color: var(--color-surface-hover);
 }
 
+/* For destructive actions like "Delete" */
+.danger {
+  background-color: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-danger);
+}
+
+.danger:hover:not(:disabled) {
+  border-color: var(--color-danger-border);
+  background-color: var(--color-danger-bg);
+}
+
 .fullWidth {
   width: 100%;
 }

@@ -1,23 +1,18 @@
-import Button from '../components/Button.jsx'
 import { useAuth } from '../hooks/useAuth.js'
 import styles from './DashboardPage.module.css'
 
-// Placeholder: the real dashboard with charts comes in Stage 3
+// Placeholder: the real dashboard with charts comes in Stage 3.
+// The top bar (navigation, log out) comes from AppLayout.
 function DashboardPage() {
-  const { user, logout } = useAuth()
+  const { user } = useAuth()
 
   return (
-    <main className={styles.page}>
-      <div className={styles.card}>
-        <h1 className={styles.title}>Dashboard</h1>
-        <p className={styles.info}>
-          Logged in as <span className={styles.email}>{user.email}</span>
-        </p>
-        <Button variant="secondary" onClick={logout} className={styles.logout}>
-          Log out
-        </Button>
-      </div>
-    </main>
+    <section>
+      <h1 className={styles.title}>Dashboard</h1>
+      <p className={styles.info}>
+        Logged in as <span className={styles.email}>{user.email}</span>. Charts with your spending are coming soon.
+      </p>
+    </section>
   )
 }
 

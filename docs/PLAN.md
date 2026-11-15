@@ -56,7 +56,7 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
 - [x] Globalna obsługa błędów (`@RestControllerAdvice`)
 - [x] Testy serwisów
 - [x] Frontend: przejście z Tailwinda na CSS Modules
-- [ ] Frontend: strona kategorii
+- [x] Frontend: strona kategorii
 - [ ] Frontend: strona wydatków (lista + formularz dodawania/edycji)
 
 ### Etap 3: Filtrowanie i statystyki
@@ -137,3 +137,12 @@ Relacje: User 1—N Category, User 1—N Expense, Category 1—N Expense.
   albo `ConflictException` (409). Nieoczekiwany wyjątek → 500 z ogólnym komunikatem, szczegóły tylko w logach.
 - 401 przy braku/złym tokenie zwraca filtr Spring Security (pusta treść + nagłówek `WWW-Authenticate`, standard OAuth2),
   a nie `@RestControllerAdvice`. Na razie zostawiamy; ewentualnie później własny `AuthenticationEntryPoint` z `ProblemDetail`.
+- Strony zalogowanego użytkownika w `AppLayout` (górny pasek: nawigacja `NavLink`, email, Log out), trasa zagnieżdżona
+  pod `ProtectedRoute`.
+- Dane z API przez własne hooki (`useCategories`): stan `{ data, loading, error }`, flaga `ignore` w `useEffect` przeciw
+  spóźnionym odpowiedziom, `reload()` przez licznik `reloadKey`. Po dodaniu/edycji/usunięciu lista aktualizowana lokalnie
+  z odpowiedzi serwera (bez ponownego pobierania całości).
+- Kategorie: edycja w wierszu (Enter zapisuje, Escape anuluje), usuwanie z `window.confirm`. 404 przy edycji/usuwaniu
+  (kategoria usunięta gdzie indziej) → komunikat na stronie i odświeżenie listy.
+- Wspólne style pól: `FormField.module.css`, w innych modułach przez `composes: input from './FormField.module.css'`.
+  `FormField` przyjmuje `children` wyświetlane obok pola (np. przycisk „Add”).

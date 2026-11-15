@@ -1,0 +1,44 @@
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.subtitle {
+  margin-top: 0.25rem;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-subtle);
+}
+
+.alert {
+  margin-top: 1rem;
+}
+
+.card {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-md);
+}
+
+/* list-style: none removes the bullet points of <ul> */
+.list {
+  margin-top: 1.25rem;
+  list-style: none;
+}
+
+.status,
+.empty {
+  margin-top: 1.25rem;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-subtle);
+}
+
+.loadError {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}

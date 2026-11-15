@@ -1,12 +1,14 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
+import AppLayout from './components/AppLayout.jsx'
 import GuestRoute from './components/GuestRoute.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
+import CategoriesPage from './pages/CategoriesPage.jsx'
 import DashboardPage from './pages/DashboardPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
 import RegisterPage from './pages/RegisterPage.jsx'
 
-// The list of routes. More pages (/expenses, /categories) will be added in later stages.
+// The list of routes. /expenses will be added with the expenses page.
 function App() {
   return (
     <Routes>
@@ -18,9 +20,12 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
       </Route>
 
-      {/* Only for logged-in users */}
+      {/* Only for logged-in users: ProtectedRoute checks login, AppLayout adds the top bar */}
       <Route element={<ProtectedRoute />}>
-        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route element={<AppLayout />}>
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/categories" element={<CategoriesPage />} />
+        </Route>
       </Route>
 
       {/* "*" matches any path that doesn't match the routes above */}
